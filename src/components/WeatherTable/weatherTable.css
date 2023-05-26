@@ -1,0 +1,69 @@
+/* 
+  
+  .full-width {
+    flex-grow: 1;
+    background-color: lightgray;
+  }
+  .table-container {
+    display: flex;
+  }
+  
+  .grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+  }
+  
+  .flex-container-vals {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .flex-container-vals > div {
+    flex-basis: calc(33.33% - 10px);
+    margin-bottom: 10px;
+  }
+   */
+
+   .tableBackground{
+      background-color: #001f3f;
+      color: #FFF;
+   }
+   .flex-container
+   {
+    display: flex;
+    flex-direction: row;
+   
+   }
+   .flex-container>div{
+    flex-basis: 100%;
+   }
+   .weatherSummary
+   {
+    /* background-color: #FFF; */
+    /* height: 100px;
+    width :100px; */
+   }
+   .weatherTilesContainer{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+   
+   }
+   .weatherTiles{
+    display: flex;
+    flex-direction: row;
+   }
+   .weatherTiles >div{
+    flex: 0 0 8rem; /* Set fixed width */
+    height: 9rem; /* Set fixed height */
+    background-color: #4a448a;
+    margin: 5px;
+   }
+
+   @media (max-width: 768px) {
+    .flex-container{
+        flex-direction: column;
+    }
+   }

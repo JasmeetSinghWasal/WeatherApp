@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
 
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import DetailedCity from "./components/DetailedView/detailedCity";
+import Weather from "./components/weather";
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+      <h1 className="app-heading"> Weather Forecast App</h1>
       </header>
+      <Router>
+        <Routes>
+          <Route exact path="/" element={<Weather />} />
+          <Route path="/details/:city" element={<DetailedCity/>}/>
+        </Routes>
+      </Router>
+      <footer>
+      <div className="my-footer">
+    Developed by <a href="https://jasmeetsinghwasal.netlify.app" target="_blank"> Jasmeet Singh Wasal </a>
+    
+  </div>
+      </footer>
     </div>
   );
 }
