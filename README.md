@@ -13,7 +13,7 @@ Website - https://jasmeetsinghwasal.netlify.app
 # Assumptions -
 - Do not run this app in Incognito. IT does'nt save sessino Storage  and app won;t work.
 - By default I have added 3 cities in the sessionStorage symbolising user's preferences.
-- If we reload the page it comes again however, it get's deleted. With use of database this can be mitigated.
+- If we re-open the browser it comes again however, it get's deleted. With use of database this can be mitigated.
 
 # Local build command
 npm start
