@@ -6,10 +6,11 @@ const SearchBar = (props) => {
       <div className='search-section'>
         {/* <form onSubmit={props.handleSubmit}> */}
         <form>
+          
         <input
           className="search-container"
           type="text"
-          placeholder="Enter City"
+          placeholder="Please enter full city name"
           value={props.city}
           onChange={props.onChange}
         />

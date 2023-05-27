@@ -4,13 +4,13 @@ import TempUnitSlider from "./TempUnitSlider/TempUnitSlider";
 import { Link } from "react-router-dom";
 import days from "../utility/DaysEnum";
 // import ErrorMessage from "./ErrorMsg/ErrorMessage";
-
+import DatedCrds from "./DatedCards/datedCrds";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "./SearchBar/SearchBar";
 import { Helmet } from "react-helmet";
-
+import WeatherIcon from "./WeatherIcon/weatherIcon";
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [city, setCity] = useState("");
@@ -24,7 +24,7 @@ const Weather = () => {
       if (!city) return;
       try {
         const response = await fetch(
-          `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.REACT_APP_API_KEY}`
+          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.REACT_APP_API_KEY}`
         );
 
         if (response.ok) {
@@ -43,6 +43,10 @@ const Weather = () => {
 
   //Update user favourites
   useEffect(() => {
+    //Adding defualt locations for user
+
+    const defaultLocations = ["Delhi", "Mumbai", "London"];
+    sessionStorage.setItem("UserFavs", JSON.stringify(defaultLocations));
     const storedFavorites = sessionStorage.getItem("UserFavs");
     if (storedFavorites) {
       setUserFav(JSON.parse(storedFavorites));
@@ -71,19 +75,22 @@ const Weather = () => {
     const sessionFav = sessionStorage.getItem("UserFavs");
     if (sessionFav) {
       if (sessionFav.includes(city)) {
-        alert("City already in favoiurtes");
+        alert("City already in favourites");
         return;
       } else {
         setUserFav([...userFav, city]);
         sessionStorage.setItem("UserFavs", JSON.stringify([...userFav, city]));
       }
+    } else {
+      setUserFav([...userFav, city]);
+      sessionStorage.setItem("UserFavs", JSON.stringify([...userFav, city]));
     }
   };
 
   //validate city
   const validateCityName = (city) => {
-  // Regular expression to check if the city name contains at least one letter and does not have numbers or multiple spaces
-  const regex = /^[A-Za-z\s'-]+$/;
+    // Regular expression to check if the city name contains at least one letter and does not have numbers or multiple spaces
+    const regex = /^[A-Za-z\s'-]+$/;
 
     // Check if the city name matches the regular expression and is not just whitespace
     if (regex.test(city) && city.trim().length > 0) {
@@ -92,7 +99,7 @@ const Weather = () => {
       return false; // City name is invalid
     }
   };
-  
+
   const handleCityChange = (event) => {
     const city = event.target.value;
     if (city.trim() === "") {
@@ -135,8 +142,8 @@ const Weather = () => {
               : (item.main.temp - 273.15).toFixed(2); //Celsius formula
 
           const description = item.weather[0].description;
-
-          return { date, day, temperature, description };
+          const extraDetails = item;
+          return { date, day, temperature, description, extraDetails };
         })
     : [];
 
@@ -179,23 +186,27 @@ const Weather = () => {
                   {weatherData.city.name}{" "}
                 </button>
               </form>
+              {/* <DatedCrds forecast={forecast} tempUnit={tempUnit}/> */}
               <div className="card-container">
                 {forecast.map((item) => (
                   <div className="card" key={item.date}>
+                    <p>{item.date.toLocaleDateString()}</p>
                     <h3>
                       <u>{item.day}</u>
                     </h3>
-                    <p>{item.date.toLocaleDateString()}</p>
                     <p>
                       Temperature: {item.temperature} {"\u00b0"}
                       {tempUnit}
                     </p>
-                    <p>{item.description}</p>
+                    <WeatherIcon
+                      iconCode={item.extraDetails.weather[0].icon}
+                    ></WeatherIcon>
+                    <p>{item.description.toUpperCase()}</p>
                   </div>
                 ))}
               </div>
               <Link className="viewMoreLink" to={`/details/${city}`}>
-                View more{" "}
+                View More Details...{" "}
               </Link>
             </>
           ) : (
@@ -203,7 +214,7 @@ const Weather = () => {
           )}
         </section>
         <section>
-          <h3>User favourites</h3>
+          <h3>{userFav.length > 0 ? <h1> Your Saved Locations</h1> : ""}</h3>
           <div>
             <ul>
               {userFav.map((favorite, index) => (
