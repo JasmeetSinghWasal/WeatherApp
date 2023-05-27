@@ -116,7 +116,7 @@ const Weather = () => {
           {weatherData === null ? (
             <p>No data available</p>
           ) : weatherData.cod === "200" ? (
-            <>
+            <> 
               <div className="card-container-main">
                 <div className="weatherMain-flex-container">
                   <div className="row1">
