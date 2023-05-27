@@ -4,6 +4,8 @@ import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import days from "../../utility/DaysEnum";
 import WeatherTable from "../WeatherTable/WeatherTable";
+import DatedCrds from "../DatedCards/datedCrds";
+
 const DetailedCity = () => {
   const { city } = useParams();
   const [tempUnit, setTempUnit] = useState(
@@ -19,12 +21,10 @@ const DetailedCity = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (!city) return;
-
       try {
         const response = await fetch(
           `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.REACT_APP_API_KEY}`
         );
-
         if (response.ok) {
           const data = await response.json();
           setMoreData(data);
@@ -35,7 +35,6 @@ const DetailedCity = () => {
         setMoreData(null);
       }
     };
-
     fetchData();
   }, [city]);
 
@@ -56,7 +55,7 @@ const DetailedCity = () => {
 
           const description = item.weather[0].description;
 
-          //custom format 
+          //custom format
           return { date, day, temperature, description, extraDetails };
         })
     : [];
@@ -73,7 +72,6 @@ const DetailedCity = () => {
         Go Home{" "}
       </Link>
 
-
       {forecast.length > 0 && (
         <div key={forecast[0].date}>
           <WeatherTable
@@ -86,20 +84,9 @@ const DetailedCity = () => {
       )}
 
       <div className="card-container">
-        {console.log(forecast[0])}
         {forecast.map((item, index) =>
           index !== 0 ? (
-            <div className="card" key={item.date}>
-              <h3>
-                <u>{item.day}</u>
-              </h3>
-              <p>{item.date.toLocaleDateString()}</p>
-              <p>
-                Temperature: {item.temperature} {"\u00b0"}
-                {tempUnit}
-              </p>
-              <p>{item.description}</p>
-            </div>
+            <DatedCrds item={item} tempUnit={tempUnit}></DatedCrds>
           ) : null
         )}
       </div>
