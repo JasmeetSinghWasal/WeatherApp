@@ -7,7 +7,7 @@ const WeatherTable = ({ weatherData,tempUnit,handleUnitChange }) => {
   return (
     <>
      <TempUnitSlider defaultUnit={tempUnit} onUnitChange={handleUnitChange} />
-      Temp Unit {tempUnit}
+     <h2>Temperature Unit :  {'\u00b0'}{tempUnit}</h2>
       
     <div className="flex-container tableBackground">
       <div class="weatherSummary">

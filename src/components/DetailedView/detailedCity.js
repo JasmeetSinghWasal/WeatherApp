@@ -5,16 +5,16 @@ import { useParams } from "react-router-dom";
 import days from "../../utility/DaysEnum";
 import WeatherTable from "../WeatherTable/WeatherTable";
 const DetailedCity = () => {
-//   const tempUnit = JSON.parse(sessionStorage.getItem("tempUnit"));
   const { city } = useParams();
-  const [tempUnit, setTempUnit] = useState(JSON.parse(sessionStorage.getItem("tempUnit")));
+  const [tempUnit, setTempUnit] = useState(
+    JSON.parse(sessionStorage.getItem("tempUnit"))
+  );
   const [moreData, setMoreData] = useState(null);
 
   const handleUnitChange = (unit) => {
     setTempUnit(unit);
-    sessionStorage.setItem('tempUnit', JSON.stringify(unit));
+    sessionStorage.setItem("tempUnit", JSON.stringify(unit));
   };
-
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,6 +47,7 @@ const DetailedCity = () => {
           const date = new Date(item.dt * 1000);
           const day = days[date.getDay()];
           const extraDetails = item;
+
           //OpenWeatherAPI return temperature in Kelvin by default
           const temperature =
             tempUnit === "F"
@@ -55,45 +56,54 @@ const DetailedCity = () => {
 
           const description = item.weather[0].description;
 
+          //custom format 
           return { date, day, temperature, description, extraDetails };
         })
     : [];
 
   return (
-    
     <section>
+      {/* To set custom page metadata for each page */}
       <Helmet>
-    <title>{city}-Weather</title>
-    <meta name="description" content="Weather app by Jasmeet" />
-  </Helmet>
-         <Link className="goHomeLink" to={`/`}>Go Home </Link>
-    <h1>Weather for :  {city}</h1>
-     
+        <title>{city}-Weather</title>
+        <meta name="description" content="Weather app by Jasmeet" />
+      </Helmet>
+
+      <Link className="goHomeLink" to={`/`}>
+        Go Home{" "}
+      </Link>
+      
+      <h1>Weather for : {city}</h1>
+
       {forecast.length > 0 && (
         <div key={forecast[0].date}>
-          <WeatherTable  weatherData={forecast[0]} tempUnit={tempUnit} handleUnitChange={handleUnitChange} />
+          <WeatherTable
+            weatherData={forecast[0]}
+            tempUnit={tempUnit}
+            handleUnitChange={handleUnitChange}
+          />
         </div>
       )}
-    
-    <div className="card-container">
-      {console.log(forecast[0])}
-      {forecast.map((item, index) =>
-        index !== 0 ? (
-          <div className="card" key={item.date}>
-            <h3>
-              <u>{item.day}</u>
-            </h3>
-            <p>{item.date.toLocaleDateString()}</p>
-            <p>
-              Temperature: {item.temperature} {tempUnit}
-            </p>
-            <p>{item.description}</p>
-          </div>
-        ) : null
-      )}
-    </div>
-   
-  </section>
+
+      <div className="card-container">
+        {console.log(forecast[0])}
+        {forecast.map((item, index) =>
+          index !== 0 ? (
+            <div className="card" key={item.date}>
+              <h3>
+                <u>{item.day}</u>
+              </h3>
+              <p>{item.date.toLocaleDateString()}</p>
+              <p>
+                Temperature: {item.temperature} {"\u00b0"}
+                {tempUnit}
+              </p>
+              <p>{item.description}</p>
+            </div>
+          ) : null
+        )}
+      </div>
+    </section>
   );
 };
 

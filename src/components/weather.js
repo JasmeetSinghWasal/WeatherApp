@@ -4,6 +4,10 @@ import TempUnitSlider from "./TempUnitSlider/TempUnitSlider";
 import { Link } from "react-router-dom";
 import days from "../utility/DaysEnum";
 // import ErrorMessage from "./ErrorMsg/ErrorMessage";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import SearchBar from "./SearchBar/SearchBar";
 import { Helmet } from "react-helmet";
 
@@ -49,6 +53,7 @@ const Weather = () => {
   const handleDeleteFavorite = (favorite) => {
     const updatedFavorites = userFav.filter((item) => item !== favorite);
     setUserFav(updatedFavorites);
+    setCity("");
     sessionStorage.setItem("UserFavs", JSON.stringify(updatedFavorites));
   };
 
@@ -75,20 +80,32 @@ const Weather = () => {
     }
   };
 
-  //
+  //validate city
+  const validateCityName = (city) => {
+  // Regular expression to check if the city name contains at least one letter and does not have numbers or multiple spaces
+  const regex = /^[A-Za-z\s'-]+$/;
+
+    // Check if the city name matches the regular expression and is not just whitespace
+    if (regex.test(city) && city.trim().length > 0) {
+      return true; // City name is valid
+    } else {
+      return false; // City name is invalid
+    }
+  };
+  
   const handleCityChange = (event) => {
     const city = event.target.value;
-    // const regex = /^[a-zA-Z\s]+$/; // Regular expression to allow only letters and spaces
-    // if (regex.test(city)) {
-    //   setErrorMsg("");
-    //   setCity(city);
-    // } else {
-    //   setErrorMsg("Only letters are allowed in city field.");
-    //   return;
-    // }
-    setCity(city);
-
-    //
+    if (city.trim() === "") {
+      // Empty city name, clear the error message and set the city state
+      setErrorMsg("");
+      setCity(city);
+    } else if (validateCityName(city)) {
+      // City name is valid
+      setErrorMsg("");
+      setCity(city);
+    } else {
+      setErrorMsg("Only letters are allowed in city field.");
+    }
   };
 
   //Get data for favourite city clicked
@@ -129,16 +146,21 @@ const Weather = () => {
         <title>Weather-Home</title>
         <meta name="description" content="Weather app by Jasmeet" />
       </Helmet>
+
       {/* Using callback to get selected unit from child component */}
       <TempUnitSlider defaultUnit={tempUnit} onUnitChange={handleUnitChange} />
-      Temperature Unit : {tempUnit}
-      {city !== "" && city !== " " && city != null && city !== undefined ? (
+      <h2>
+        Temperature Unit : {"\u00b0"}
+        {tempUnit}
+      </h2>
+      {/* {city !== "" && city !== " " && city != null && city !== undefined ? (
         <h2>{city}</h2>
       ) : (
         ""
-      )}
+      )} */}
       <div className="mycontainer">
         {/* SearchBar componennt */}
+
         <SearchBar
           onSubmit={handleSubmit}
           city={city}
@@ -150,12 +172,13 @@ const Weather = () => {
             <p>No data available</p>
           ) : weatherData.cod === "200" ? (
             <>
-              <div>
-                <form onSubmit={handleAddToFavs}>
-                  <p>Want to add {weatherData.city.name} to your favourites?</p>
-                  <button type="submit">Add to Favourite</button>
-                </form>
-              </div>
+              <form onSubmit={handleAddToFavs}>
+                <button className="deleteButton" type="submit">
+                  {" "}
+                  <FontAwesomeIcon icon={faStar} color="gold" /> Save{" "}
+                  {weatherData.city.name}{" "}
+                </button>
+              </form>
               <div className="card-container">
                 {forecast.map((item) => (
                   <div className="card" key={item.date}>
@@ -164,7 +187,8 @@ const Weather = () => {
                     </h3>
                     <p>{item.date.toLocaleDateString()}</p>
                     <p>
-                      Temperature: {item.temperature} {tempUnit}
+                      Temperature: {item.temperature} {"\u00b0"}
+                      {tempUnit}
                     </p>
                     <p>{item.description}</p>
                   </div>
@@ -193,7 +217,7 @@ const Weather = () => {
                     className="deleteButton"
                     onClick={() => handleDeleteFavorite(favorite)}
                   >
-                    Delete
+                    Delete <FontAwesomeIcon icon={faTrash} />
                   </button>
                 </li>
               ))}

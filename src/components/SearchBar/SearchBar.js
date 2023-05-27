@@ -4,7 +4,8 @@ import './searchbar.css';
 const SearchBar = (props) => {
     return (
       <div className='search-section'>
-        <form onSubmit={props.handleSubmit}>
+        {/* <form onSubmit={props.handleSubmit}> */}
+        <form>
         <input
           className="search-container"
           type="text"
@@ -12,7 +13,8 @@ const SearchBar = (props) => {
           value={props.city}
           onChange={props.onChange}
         />
-        <div>{props.errorMsg != "" && <ErrorMessage message={props.errorMsg} />}</div>
+        <div>{props.errorMsg !== "" && <ErrorMessage message={props.errorMsg} />}</div>
+        {/* Using onChange hence, commented Submit button */}
         {/* <button className="search-button" type="submit">
           Search
         </button> */}
