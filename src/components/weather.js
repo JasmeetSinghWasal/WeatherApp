@@ -2,8 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./weather.css";
 import TempUnitSlider from "./TempUnitSlider/TempUnitSlider";
 import { Link } from "react-router-dom";
-import days from "../utility/DaysEnum";
-// import ErrorMessage from "./ErrorMsg/ErrorMessage";
 import DatedCrds from "./DatedCards/datedCrds";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -44,7 +42,7 @@ const Weather = () => {
 
   //Update user favourites
   useEffect(() => {
-    const defaultLocations = ["Delhi", "Mumbai", "London"];
+    const defaultLocations = ["London","Mumbai", "Dubai",];
     if (sessionStorage.getItem("UserFavs") == null) {
       sessionStorage.setItem("UserFavs", JSON.stringify(defaultLocations));
     }
@@ -119,12 +117,6 @@ const Weather = () => {
             <p>No data available</p>
           ) : weatherData.cod === "200" ? (
             <>
-              <form onSubmit={handleAddToFavoritesSubmit}>
-                <button className="deleteButton" type="submit">
-                  <FontAwesomeIcon icon={faStar} color="gold" /> Save{" "}
-                  {weatherData.city.name}
-                </button>
-              </form>
               <div className="card-container-main">
                 <div className="weatherMain-flex-container">
                   <div className="row1">
@@ -175,6 +167,12 @@ const Weather = () => {
               </div>
 
            
+              <form onSubmit={handleAddToFavoritesSubmit}>
+                <button className="deleteButton" type="submit">
+                  <FontAwesomeIcon icon={faStar} color="gold" /> Save{" "}
+                  {weatherData.city.name}
+                </button>
+              </form>
             </>
           ) : (
             <p>No data available</p>

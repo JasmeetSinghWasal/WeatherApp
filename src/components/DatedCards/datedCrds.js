@@ -8,7 +8,7 @@ const DatedCrds = ({ item, tempUnit, screen }) => {
         <div className="card-main-small" key={item.date}>
           {/* <p>{item.date.toLocaleDateString()}</p> */}
           <h3>
-            <u>{item.day.toString().substring(0,3)}</u>
+            {item.day.toString().substring(0,3)}
           </h3>
           <WeatherIcon iconCode={item.extraDetails.weather[0].icon} />
           {/* <p>{item.description.toUpperCase()}</p> */}
@@ -20,7 +20,7 @@ const DatedCrds = ({ item, tempUnit, screen }) => {
       <div className="card" key={item.date}>
         <p>{item.date.toLocaleDateString()}</p>
         <h3>
-          <u>{item.day}</u>
+          {item.day}
         </h3>
         <p>
           Temperature: {item.temperature} {"\u00b0"}
