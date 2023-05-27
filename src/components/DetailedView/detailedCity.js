@@ -22,7 +22,7 @@ const DetailedCity = () => {
 
       try {
         const response = await fetch(
-          `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.REACT_APP_API_KEY}`
+          `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.REACT_APP_API_KEY}`
         );
 
         if (response.ok) {
@@ -72,12 +72,12 @@ const DetailedCity = () => {
       <Link className="goHomeLink" to={`/`}>
         Go Home{" "}
       </Link>
-      
-      <h1>Weather for : {city}</h1>
+
 
       {forecast.length > 0 && (
         <div key={forecast[0].date}>
           <WeatherTable
+            cityName={city}
             weatherData={forecast[0]}
             tempUnit={tempUnit}
             handleUnitChange={handleUnitChange}

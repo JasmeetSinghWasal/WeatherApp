@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
-const TempUnitSlider = ({defaultUnit, onUnitChange}) => {
-  const [selectedUnit, setSelectedUnit] = useState("C");
+const TempUnitSlider = ({defaultUnit, onUnitChange}) => {  
 
   const handleSliderChange = (event) => {
     const unit = event.target.value;
