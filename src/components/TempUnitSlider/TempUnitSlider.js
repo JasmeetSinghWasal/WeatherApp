@@ -10,8 +10,8 @@ const TempUnitSlider = ({defaultUnit, onUnitChange}) => {
 
   return (
     <div>
-      <label>
-        Celsius
+      <label className='tempunit-label'>
+        <span>Celsius</span>
         <input
           type="radio"
           value="C"
@@ -19,8 +19,8 @@ const TempUnitSlider = ({defaultUnit, onUnitChange}) => {
           onChange={handleSliderChange}
         />
       </label>
-      <label>
-        Fahrenheit
+      <label className='tempunit-label'>
+      <span> Fahrenheit</span>
         <input
           type="radio"
           value="F"
