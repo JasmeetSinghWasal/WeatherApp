@@ -46,6 +46,9 @@ const Weather = () => {
     //Adding defualt locations for user
 
     const defaultLocations = ["Delhi", "Mumbai", "London"];
+    //Compare if userFavs is = defaultLocations
+    //else updatw with the new one
+    if(sessionStorage.getItem('UserFavs') == null)    
     sessionStorage.setItem("UserFavs", JSON.stringify(defaultLocations));
     const storedFavorites = sessionStorage.getItem("UserFavs");
     if (storedFavorites) {
