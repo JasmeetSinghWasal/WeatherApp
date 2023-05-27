@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import days from "../utility/DaysEnum";
 // import ErrorMessage from "./ErrorMsg/ErrorMessage";
 import SearchBar from "./SearchBar/SearchBar";
+import { Helmet } from "react-helmet";
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -124,13 +125,18 @@ const Weather = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Weather-Home</title>
+        <meta name="description" content="Weather app by Jasmeet" />
+      </Helmet>
       {/* Using callback to get selected unit from child component */}
       <TempUnitSlider defaultUnit={tempUnit} onUnitChange={handleUnitChange} />
       Temperature Unit : {tempUnit}
       {city !== "" && city !== " " && city != null && city !== undefined ? (
-            <h2>{city}</h2>
-           ) : ''}
-      
+        <h2>{city}</h2>
+      ) : (
+        ""
+      )}
       <div className="mycontainer">
         {/* SearchBar componennt */}
         <SearchBar
@@ -164,7 +170,9 @@ const Weather = () => {
                   </div>
                 ))}
               </div>
-              <Link className="viewMoreLink"  to={`/details/${city}`}>View more </Link>
+              <Link className="viewMoreLink" to={`/details/${city}`}>
+                View more{" "}
+              </Link>
             </>
           ) : (
             <p>No data available</p>
@@ -174,10 +182,17 @@ const Weather = () => {
           <h3>User favourites</h3>
           <div>
             <ul>
-              {userFav.map((favorite, index) => (                                
-                <li className="favItem" key={index} onClick={() => getFavCityWeather(favorite)}>
+              {userFav.map((favorite, index) => (
+                <li
+                  className="favItem"
+                  key={index}
+                  onClick={() => getFavCityWeather(favorite)}
+                >
                   <span className="favCityName">{favorite}</span>
-                  <button className="deleteButton" onClick={() => handleDeleteFavorite(favorite)}>
+                  <button
+                    className="deleteButton"
+                    onClick={() => handleDeleteFavorite(favorite)}
+                  >
                     Delete
                   </button>
                 </li>

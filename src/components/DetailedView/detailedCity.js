@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import { useParams } from "react-router-dom";
 import days from "../../utility/DaysEnum";
 import WeatherTable from "../WeatherTable/WeatherTable";
@@ -60,7 +61,11 @@ const DetailedCity = () => {
 
   return (
     
-    <div>
+    <section>
+      <Helmet>
+    <title>{city}-Weather</title>
+    <meta name="description" content="Weather app by Jasmeet" />
+  </Helmet>
          <Link className="goHomeLink" to={`/`}>Go Home </Link>
     <h1>Weather for :  {city}</h1>
      
@@ -88,7 +93,7 @@ const DetailedCity = () => {
       )}
     </div>
    
-  </div>
+  </section>
   );
 };
 
