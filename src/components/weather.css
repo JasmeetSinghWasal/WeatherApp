@@ -100,11 +100,13 @@ form {
 .viewMoreLink {
   text-decoration: none;
   color: #c6aaef;
-  background-color: #000000;
+  background-color: #0000002b;
   padding: 8px 10px 8px 10px;
   font-size: 20px;
-  float:center;
+  float: center;
   /* margin-left: 3%; */
+  margin-top: 1%;
+  border-radius: 10px; 
 }
 .card,
 .card h3,
