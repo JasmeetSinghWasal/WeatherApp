@@ -24,7 +24,7 @@ body{
   min-height: 440px;
   color: black;
   text-align: center;
-  margin: 5% auto;
+  margin: 0% auto;
   border-radius: 10px;
   padding-bottom: 32px;
   box-shadow: 2px 4px 8px rgba(0,0,0,0.2), 4px 6px 20px rgba(0,0,0,0.1) ;

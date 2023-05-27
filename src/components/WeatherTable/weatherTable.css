@@ -24,8 +24,8 @@
     flex-direction: row;
    }
    .weatherTiles >div{
-    flex: 0 0 8rem;     /* Set fixed width */
-    height: 9rem;       /* Set fixed height */
+    flex: 0 0 30%;     /* Set fixed width */
+    height: 6rem;       /* Set fixed height */
     background-color: #4a448a;
     margin: 5px;
    }

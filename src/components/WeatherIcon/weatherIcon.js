@@ -1,7 +1,7 @@
 import React from 'react';
 
 const WeatherIcon = ({iconCode}) => {
-    const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+    const iconUrl = `${process.env.REACT_APP_GETPNG_KEY}/${iconCode}.png`;
 
     return <img src={iconUrl} alt="Weather Icon" />;
 }
